@@ -6,6 +6,7 @@ import org.apache.logging.log4j.Logger;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.Properties;
 
 /**
@@ -41,7 +42,7 @@ public final class SettingsConfigurator {
     }
 
     public Properties getConfig() {
-        return  (Properties) config.clone();
+        return (Properties) config.clone();
     }
 
     private Properties parseConfig(Properties customSettings) {
@@ -61,6 +62,9 @@ public final class SettingsConfigurator {
 
         try (InputStream inputStream = SettingsConfigurator.class.getClassLoader().getResourceAsStream(defaultConfigFilePath)) {
             result.load(inputStream);
+
+            result.setProperty("icons.font.path", preparePathForDefaultResource(result.getProperty("icons.font.path")));
+
         } catch (FileNotFoundException error) {
             System.out.println("Не найден файл конфигурации по умолчанию");
             logger.error("Не найден файл конфигурации по умолчанию", error);
@@ -70,5 +74,19 @@ public final class SettingsConfigurator {
         }
 
         return result;
+    }
+
+    private String preparePathForDefaultResource(String path) throws FileNotFoundException {
+        URL resource = SettingsConfigurator.class.getClassLoader().getResource(path);
+
+        if (resource == null) {
+            throw new FileNotFoundException("resources path: " + path);
+        }
+
+        return resource.toExternalForm();
+    }
+
+    public boolean isUseIconsFont(){
+        return Boolean.parseBoolean(config.getProperty("useIconsFont"));
     }
 }
