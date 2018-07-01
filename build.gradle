@@ -10,8 +10,12 @@ version '1.0-SNAPSHOT'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
+mainClassName = 'core.AppCore'
+
 repositories {
     mavenCentral()
+    jcenter()
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
