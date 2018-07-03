@@ -66,10 +66,8 @@ public final class SettingsConfigurator {
             result.setProperty("icons.font.path", preparePathForDefaultResource(result.getProperty("icons.font.path")));
 
         } catch (FileNotFoundException error) {
-            System.out.println("Не найден файл конфигурации по умолчанию");
             logger.error("Не найден файл конфигурации по умолчанию", error);
         } catch (IOException error) {
-            System.out.println("Не возможно загрузить настройки умолчанию");
             logger.error("Не возможно загрузить настройки умолчанию", error);
         }
 

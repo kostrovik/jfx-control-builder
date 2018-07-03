@@ -19,31 +19,36 @@ public class ButtonBuilder {
     }
 
     public Button createButton(String buttonLabel) {
-        return new Button(buttonLabel);
+        Button button = new Button();
+        setLabel(button, buttonLabel);
+
+        return button;
     }
 
     public Button createButton(SolidIcons buttonIcon) {
         Button button = new Button();
-        if (config.isUseIconsFont()) {
-            setIcon(button, buttonIcon);
-        }
+        setIcon(button, buttonIcon);
+
         return button;
     }
 
     public Button createButton(SolidIcons buttonIcon, String buttonLabel) {
         Button button = new Button();
-        if (config.isUseIconsFont()) {
-            setIcon(button, buttonIcon);
-        }
-
-        button.setText(buttonLabel);
+        setIcon(button, buttonIcon);
+        setLabel(button, buttonLabel);
 
         return button;
     }
 
+    private void setLabel(Button button, String buttonLabel) {
+        button.setText(buttonLabel);
+    }
+
     private void setIcon(Button button, SolidIcons buttonIcon) {
-        Text icon = new Text(buttonIcon.getSymbol());
-        icon.setFont(buttonIcon.getFont());
-        button.setGraphic(icon);
+        if (config.isUseIconsFont()) {
+            Text icon = new Text(buttonIcon.getSymbol());
+            icon.setFont(buttonIcon.getFont());
+            button.setGraphic(icon);
+        }
     }
 }
